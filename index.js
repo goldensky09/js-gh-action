@@ -18,7 +18,7 @@ try {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
-  getDirectories('./').then((dir) => console.log(dir))
+  getDirectories('./').then((dir) => console.log(dir));
 } catch (error) {
   core.setFailed(error.message);
 }
