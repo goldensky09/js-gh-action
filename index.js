@@ -38,7 +38,7 @@ try {
 
   let promisePR = getDirectories('pr').then((directories) => {
     directories.map((dir) => {
-      const tmpObj = {
+      return {
         id: dir,
         text: 'pr/' + dir
       }
