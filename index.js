@@ -37,7 +37,7 @@ try {
       .map(dirent => dirent.name)
 
   let promisePR = getDirectories('pr').then((directories) => {
-    directories.map((dir) => {
+    return directories.map((dir) => {
       return {
         id: dir,
         text: 'pr/' + dir
@@ -57,7 +57,7 @@ try {
     })
   });
 
-  Promise.all([promisePR, promiseR]).then((dirPR, dirR) => {
+  Promise.all([promisePR, promiseR]).then(([dirPR, dirR]) => {
     sourceTemplate.results[1].children = dirPR;
     sourceTemplate.results[2].children = dirR;
     console.log(JSON.stringify(sourceTemplate));
