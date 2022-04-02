@@ -10,6 +10,15 @@ try {
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
+
+  const { promises: { readdir } } = require('fs')
+
+  const getDirectories = async source =>
+    (await readdir(source, { withFileTypes: true }))
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => dirent.name)
+
+  console.log(getDirectories);
 } catch (error) {
   core.setFailed(error.message);
 }
