@@ -1,20 +1,21 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const fs = require('fs');
 
 const sourceTemplate = {
   "results": [
-      {
-          "id": "",
-          "text": "Select DxGUI Version"
-      },
-      {
-          "text": "Published Revisions",
-          "children": []
-      },
-      {
-          "text": "Unpublished Pull Requests",
-          "children": []
-      }
+    {
+      "id": "",
+      "text": "Select DxGUI Version"
+    },
+    {
+      "text": "Published Revisions",
+      "children": []
+    },
+    {
+      "text": "Unpublished Pull Requests",
+      "children": []
+    }
   ]
 }
 
@@ -60,9 +61,20 @@ try {
   Promise.all([promisePR, promiseR]).then(([dirPR, dirR]) => {
     sourceTemplate.results[1].children = dirR;
     sourceTemplate.results[2].children = dirPR;
-    console.log(JSON.stringify(sourceTemplate));
+
+    fs.writeFile("source.json", JSON.stringify(sourceTemplate), (err) => {
+      if (err)
+        console.log(err);
+      else {
+        console.log("File written successfully\n");
+        console.log("The written has the following contents:");
+        console.log(fs.readFileSync("source.json", "utf8"));
+      }
+    });
+
+    // console.log(JSON.stringify(sourceTemplate));
   })
-  
+
 } catch (error) {
   core.setFailed(error.message);
 }
