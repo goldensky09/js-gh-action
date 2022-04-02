@@ -43,7 +43,7 @@ try {
         text: 'pr/' + dir
       }
       sourceTemplate.results[1].children.push(tmpObj);
-      console.log(sourceTemplate);
+      console.log(JSON.stringify(sourceTemplate));
     })
   });
   getDirectories('r').then((directories) => {
@@ -53,7 +53,7 @@ try {
         text: 'r/' + dir
       }
       sourceTemplate.results[2].children.push(tmpObj);
-      console.log(sourceTemplate);
+      console.log(JSON.stringify(sourceTemplate));
     })
   });
 
