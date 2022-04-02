@@ -1,6 +1,24 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+const sourceTemplate = {
+  "results": [
+      {
+          "id": "",
+          "text": "Select DxGUI Version"
+      },
+      {
+          "text": "Published Revisions",
+          "children": []
+      },
+      {
+          "text": "Unpublished Pull Requests",
+          "children": []
+      }
+  ]
+}
+
+
 try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput('who-to-greet');
@@ -18,7 +36,27 @@ try {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
-  getDirectories('./').then((dir) => console.log(dir));
+  getDirectories('./pr').then((directories) => {
+    directories.map((dir) => {
+      const tmpObj = {
+        id: dir,
+        text: 'pr/' + dir
+      }
+      sourceTemplate.results[1].children.push(tmpObj);
+    })
+  });
+  getDirectories('./r').then((directories) => {
+    directories.map((dir) => {
+      const tmpObj = {
+        id: dir,
+        text: 'r/' + dir
+      }
+      sourceTemplate.results[2].children.push(tmpObj);
+    })
+  });
+
+  console.log(sourceTemplate);
+  
 } catch (error) {
   core.setFailed(error.message);
 }

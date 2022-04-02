@@ -1,0 +1,94 @@
+{
+    "results": [
+        {
+            "id": "",
+            "text": "Select DxGUI Version"
+        },
+        {
+            "text": "Published Revisions",
+            "children": [
+                {
+                    "id": "3.0.1-alpha.2",
+                    "text": "3.0.1-alpha.2"
+                },
+                {
+                    "id": "4.0.0",
+                    "text": "4.0.0"
+                },
+                {
+                    "id": "5.0.0-alpha.1",
+                    "text": "5.0.0-alpha.1"
+                },
+                {
+                    "id": "5.0.0",
+                    "text": "5.0.0"
+                },
+                {
+                    "id": "5.0.1-alpha.1",
+                    "text": "5.0.1-alpha.1"
+                },
+                {
+                    "id": "5.0.1-alpha.2",
+                    "text": "5.0.1-alpha.2"
+                },
+                {
+                    "id": "5.0.1-alpha.3",
+                    "text": "5.0.1-alpha.3"
+                },
+                {
+                    "id": "5.0.1",
+                    "text": "5.0.1"
+                },
+                {
+                    "id": "5.0.2-alpha.1",
+                    "text": "5.0.2-alpha.1"
+                },
+                {
+                    "id": "5.0.2-alpha.2",
+                    "text": "5.0.2-alpha.2"
+                },
+                {
+                    "id": "5.0.2-alpha.3",
+                    "text": "5.0.2-alpha.3"
+                },
+                {
+                    "id": "5.0.3",
+                    "text": "5.0.3"
+                },
+                {
+                    "id": "5.0.3-alpha.1",
+                    "text": "5.0.3-alpha.1"
+                },
+                {
+                    "id": "5.0.3-alpha.2",
+                    "text": "5.0.3-alpha.2"
+                },
+                {
+                    "id": "6.0.0",
+                    "text": "6.0.0"
+                },
+                {
+                    "id": "6.0.0-alpha.1",
+                    "text": "6.0.0-alpha.1"
+                },
+                {
+                    "id": "6.0.0-alpha.3",
+                    "text": "6.0.0-alpha.3"
+                },
+                {
+                    "id": "6.1.0",
+                    "text": "6.1.0"
+                }
+            ]
+        },
+        {
+            "text": "Unpublished Pull Requests",
+            "children": [
+                {
+                    "id": 138,
+                    "text": "138"
+                }
+            ]
+        }
+    ]
+}
