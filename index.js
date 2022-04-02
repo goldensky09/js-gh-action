@@ -36,7 +36,7 @@ try {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
-  getDirectories('./pr').then((directories) => {
+  getDirectories('pr').then((directories) => {
     directories.map((dir) => {
       const tmpObj = {
         id: dir,
@@ -45,7 +45,7 @@ try {
       sourceTemplate.results[1].children.push(tmpObj);
     })
   });
-  getDirectories('./r').then((directories) => {
+  getDirectories('r').then((directories) => {
     directories.map((dir) => {
       const tmpObj = {
         id: dir,
