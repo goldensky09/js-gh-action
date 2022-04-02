@@ -58,8 +58,8 @@ try {
   });
 
   Promise.all([promisePR, promiseR]).then(([dirPR, dirR]) => {
-    sourceTemplate.results[1].children = dirPR;
-    sourceTemplate.results[2].children = dirR;
+    sourceTemplate.results[1].children = dirR;
+    sourceTemplate.results[2].children = dirPR;
     console.log(JSON.stringify(sourceTemplate));
   })
   
