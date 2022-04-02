@@ -36,28 +36,32 @@ try {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
-  getDirectories('pr').then((directories) => {
+  let promisePR = getDirectories('pr').then((directories) => {
     directories.map((dir) => {
       const tmpObj = {
         id: dir,
         text: 'pr/' + dir
       }
-      sourceTemplate.results[1].children.push(tmpObj);
-      console.log(JSON.stringify(sourceTemplate));
+      // sourceTemplate.results[1].children.push(tmpObj);
+      // console.log(JSON.stringify(sourceTemplate));
     })
   });
-  getDirectories('r').then((directories) => {
-    directories.map((dir) => {
-      const tmpObj = {
+  let promiseR = getDirectories('r').then((directories) => {
+    return directories.map((dir) => {
+      return {
         id: dir,
         text: 'r/' + dir
       }
-      sourceTemplate.results[2].children.push(tmpObj);
-      console.log(JSON.stringify(sourceTemplate));
+      // sourceTemplate.results[2].children.push(tmpObj);
+      // console.log(JSON.stringify(sourceTemplate));
     })
   });
 
-  
+  Promise.all([promisePR, promiseR]).then((dirPR, dirR) => {
+    sourceTemplate.results[1].children = dirPR;
+    sourceTemplate.results[2].children = dirR;
+    console.log(JSON.stringify(sourceTemplate));
+  })
   
 } catch (error) {
   core.setFailed(error.message);
