@@ -32,19 +32,19 @@ jobs:
       #   run: ...
       - name: storybook versions update
         uses: ./ # Uses an action in the root directory
-        id: storybooks_versions
-      # Use the output from the `storybooks_versions` step
-      - name: Get the output json content
-        uses: DamianReeves/write-file-action
-        with:
-          path: ${{ env.home }}/sources-out.json
-          contents: |
-            echo "${{ steps.storybook_versions.outputs.content }}"
-          write-mode: append
+        id: storybook_versions
+      # Use the output from the `storybook_versions` step
+      # - name: Get the output json content
+      #   uses: DamianReeves/write-file-action
+      #   with:
+      #     path: ${{ env.home }}/sources-out.json
+      #     contents: |
+      #       echo "${{ steps.storybook_versions.outputs.content }}"
+      #     write-mode: append
       # - uses: "finnp/create-file-action@master"
-      #   env:
-      #     FILE_NAME: "./source-out.json"
-      #     FILE_DATA: echo "${{ steps.storybook_versions.outputs.content }}"
+        env:
+          FILE_NAME: "./source-out.json"
+          FILE_DATA: echo "${{ steps.storybook_versions.outputs.content }}"
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
