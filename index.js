@@ -52,7 +52,7 @@ try {
   sourceTemplate.results[1].children = rVersions;
   sourceTemplate.results[2].children = prVersions;
 
-  fwriteFileSync( 'source-out.json', JSON.stringify(sourceTemplate) );
+  writeFileSync( 'source-out.json', JSON.stringify(sourceTemplate) );
 
 } catch (error) {
   core.setFailed(error.message);
