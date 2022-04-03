@@ -1,1 +1,1 @@
-echo ""
+echo "{"results":[{"id":"","text":"Select DxGUI Version"},{"text":"Published Revisions","children":[{"id":"v1","text":"r/v1"},{"id":"v2","text":"r/v2"},{"id":"v3","text":"r/v3"}]},{"text":"Unpublished Pull Requests","children":[{"id":"1","text":"pr/1"},{"id":"2","text":"pr/2"},{"id":"3","text":"pr/3"}]}]}"
