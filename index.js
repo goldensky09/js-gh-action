@@ -33,6 +33,17 @@ try {
 
   const isPublish = core.getInput('isPublish');
   console.log("#############is publish received as" + isPublish)
+
+
+  const files = readdirSync('pr');
+
+    // files object contains all files names
+    // log them on console
+    files.forEach(file => {
+        console.log(file);
+    });
+
+
   if (isPublish === 'true') {
     rmdirSync('./pr', { recursive: true });
 
