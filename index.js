@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { readdirSync } = require('fs')
+const { readdirSync, writeFileSync } = require('fs');
 
 const sourceTemplate = {
   "results": [
@@ -51,6 +51,10 @@ try {
 
   sourceTemplate.results[1].children = rVersions;
   sourceTemplate.results[2].children = prVersions;
+
+  // fwriteFileSync( 'source-out.json', JSON.stringify(sourceTemplate) );
+
+  console.log(sourceTemplate);
   
   core.setOutput("content", sourceTemplate);
 } catch (error) {
