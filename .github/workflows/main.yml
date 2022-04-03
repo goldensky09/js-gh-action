@@ -33,7 +33,7 @@ jobs:
       - name: storybook versions update
         uses: ./ # Uses an action in the root directory
         id: storybooks_versions
-      Use the output from the `storybooks_versions` step
+      # Use the output from the `storybooks_versions` step
       - name: Get the output json content
         uses: DamianReeves/write-file-action
         with:
