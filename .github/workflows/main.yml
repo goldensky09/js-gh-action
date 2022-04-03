@@ -12,19 +12,20 @@ jobs:
       - name: Install and Build
         run: | # Install the packages
           npm install
-      # - uses: dorny/paths-filter@v2
-      #   id: filter
-      #   with:
-      #     filters: |
-      #       r:
-      #         - 'r/**'
-      #       pr:
-      #         - 'pr/**'
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            r:
+              - 'r/**'
+            pr:
+              - 'pr/**'
 
       # run only if 'release' files were changed
       # - name: release updated
       #   if: steps.filter.outputs.r == 'true'
-      #   run: ...
+      #   env:
+      #     RELEASE_FLAG: 
 
       # run if 'backend' or 'frontend' files were changed
       # - name: e2e tests
@@ -33,6 +34,8 @@ jobs:
       - name: storybook versions update
         uses: ./ # Uses an action in the root directory
         id: storybook_versions
+        with: 
+          isPublish: ${{ steps.filter.outputs.r }}
       # Use the output from the `storybook_versions` step
       # - name: Get the output json content
       #   uses: DamianReeves/write-file-action
