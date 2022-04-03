@@ -45,11 +45,11 @@ jobs:
       #     write-mode: append
       - uses: "finnp/create-file-action@master"
         env:
-          FILE_NAME: "./fileName.txt"
-          FILE_DATA: "file content"
+          FILE_NAME: "./source-out.json"
+          FILE_DATA: steps.storybook_versions.outputs.content
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: 'write text file'
-          add: 'fileName.txt'
+          message: 'update storybook versions'
+          add: '*.json'
