@@ -41,10 +41,10 @@ jobs:
       #     contents: |
       #       echo "${{ steps.storybook_versions.outputs.content }}"
       #     write-mode: append
-      - uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: "./source-out.json"
-          FILE_DATA: echo "${{ steps.storybook_versions.outputs.content }}"
+      # - uses: "finnp/create-file-action@master"
+      #   env:
+      #     FILE_NAME: "./source-out.json"
+      #     FILE_DATA: echo "${{ steps.storybook_versions.outputs.content }}"
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:

@@ -52,11 +52,8 @@ try {
   sourceTemplate.results[1].children = rVersions;
   sourceTemplate.results[2].children = prVersions;
 
-  // fwriteFileSync( 'source-out.json', JSON.stringify(sourceTemplate) );
+  fwriteFileSync( 'source-out.json', JSON.stringify(sourceTemplate) );
 
-  console.log(sourceTemplate);
-  
-  core.setOutput("content", sourceTemplate);
 } catch (error) {
   core.setFailed(error.message);
 }
