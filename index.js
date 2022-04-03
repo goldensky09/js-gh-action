@@ -33,8 +33,8 @@ try {
 
   const isPublish = core.getInput('isPublish');
   console.log("#############is publish received as" + isPublish)
-  if (isPublish) {
-    rmdirSync('pr', { recursive: true });
+  if (isPublish === 'true') {
+    rmdirSync('./pr', { recursive: true });
 
     console.log(`old PRs deleted!`);
   }
