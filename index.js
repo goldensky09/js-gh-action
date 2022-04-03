@@ -48,7 +48,7 @@ try {
 
     // get all published PR storybook versions
     getDirectories('pr').forEach(file => {
-      io.rmRF('pr/'+file``)
+      io.rmRF('pr/'+file)
         .catch((error) => {
           core.setFailed(error.message);
         });
