@@ -33,8 +33,6 @@ jobs:
       - name: storybook versions update
         uses: ./ # Uses an action in the root directory
         id: storybooks_versions
-        with:
-          who-to-greet: 'Mona the Octocat'
       # Use the output from the `storybooks_versions` step
       # - name: Get the output json content
       #   uses: DamianReeves/write-file-action
@@ -46,7 +44,7 @@ jobs:
       - uses: "finnp/create-file-action@master"
         env:
           FILE_NAME: "./source-out.json"
-          FILE_DATA: ${{ steps.storybook_versions.outputs.content }}
+          FILE_DATA: echo "${{ steps.storybook_versions.outputs.content }}"
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
