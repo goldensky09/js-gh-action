@@ -12,14 +12,14 @@ jobs:
       - name: Install and Build
         run: | # Install the packages
           npm install
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            r:
-              - 'r/**'
-            pr:
-              - 'pr/**'
+      # - uses: dorny/paths-filter@v2
+      #   id: filter
+      #   with:
+      #     filters: |
+      #       r:
+      #         - 'r/**'
+      #       pr:
+      #         - 'pr/**'
 
       # run only if 'release' files were changed
       # - name: release updated
