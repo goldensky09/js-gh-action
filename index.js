@@ -39,20 +39,20 @@ try {
 
   const files = readdirSync('pr', { withFileTypes: true });
 
-    // files object contains all files names
-    // log them on console
-    files.forEach(file => {
-        console.log(file);
-    });
+  // files object contains all files names
+  // log them on console
+  files.forEach(file => {
+    console.log(file);
+  });
 
 
   if (isPublish === 'true') {
     // rmdirSync('./pr', { withFileTypes: true, recursive: true });
     // rmSync(path.resolve(__dirname,'pr'), { recursive: true, force: true });
-    io.rmRF('pr')
-    .catch((error) => {
-      core.setFailed(error.message);
-    });
+    io.rmRF('pr/**')
+      .catch((error) => {
+        core.setFailed(error.message);
+      });
 
     console.log(`old PRs deleted!`);
   }
@@ -63,13 +63,15 @@ try {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
-  let prVersions = getDirectories('pr').map((dir) => {
-    return {
-      id: dir,
-      text: 'pr/' + dir
-    }
-  });
-
+  if (isPublish === 'true') {
+    let prVersions = getDirectories('pr').map((dir) => {
+      return {
+        id: dir,
+        text: 'pr/' + dir
+      }
+    });
+  }
+  
   let rVersions = getDirectories('r').map((dir) => {
     return {
       id: dir,
