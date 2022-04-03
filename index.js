@@ -21,6 +21,8 @@ const sourceTemplate = {
   ]
 }
 
+let prVersions = [];
+
 
 try {
   // `who-to-greet` input defined in action metadata file
@@ -54,7 +56,7 @@ try {
 
     console.log(`old PRs deleted!`);
   } else {
-    let prVersions = getDirectories('pr').map((dir) => {
+    prVersions = getDirectories('pr').map((dir) => {
       return {
         id: dir,
         text: 'pr/' + dir
