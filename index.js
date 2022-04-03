@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const { readdirSync, writeFileSync, rmdirSync, rmSync } = require('fs');
+const path = require('path');
 
 const sourceTemplate = {
   "results": [
@@ -46,7 +47,7 @@ try {
 
   if (isPublish === 'true') {
     // rmdirSync('./pr', { withFileTypes: true, recursive: true });
-    rmSync('pr', { recursive: true, force: true });
+    rmSync(path.resolve(__dirname,'pr'), { recursive: true, force: true });
 
     console.log(`old PRs deleted!`);
   }
