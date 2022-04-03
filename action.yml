@@ -1,13 +1,8 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
+name: 'Storybook Versions update'
+description: 'Update storybook versions based on published revisions'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  content: # id of output
+    description: 'The storybook version in json format'
 runs:
   using: 'node16'
   main: 'index.js'

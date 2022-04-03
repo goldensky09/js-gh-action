@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const fs = require('fs');
+const { readdirSync } = require('fs')
 
 const sourceTemplate = {
   "results": [
@@ -22,59 +22,37 @@ const sourceTemplate = {
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
+  // const nameToGreet = core.getInput('who-to-greet');
+  // console.log(`Hello ${nameToGreet}!`);
+  // const time = (new Date()).toTimeString();
+  // core.setOutput("time", time);
   // Get the JSON webhook payload for the event that triggered the workflow
-  // const payload = JSON.stringify(github.context.payload, undefined, 2)
-  // console.log(`The event payload: ${payload}`);
+  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  console.log(`The event payload: ${payload}`);
 
-  const { promises: { readdir } } = require('fs')
+  const getDirectories = source =>
+  readdirSync(source, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
 
-  const getDirectories = async source =>
-    (await readdir(source, { withFileTypes: true }))
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name)
-
-  let promisePR = getDirectories('pr').then((directories) => {
-    return directories.map((dir) => {
-      return {
-        id: dir,
-        text: 'pr/' + dir
-      }
-      // sourceTemplate.results[1].children.push(tmpObj);
-      // console.log(JSON.stringify(sourceTemplate));
-    })
-  });
-  let promiseR = getDirectories('r').then((directories) => {
-    return directories.map((dir) => {
-      return {
-        id: dir,
-        text: 'r/' + dir
-      }
-      // sourceTemplate.results[2].children.push(tmpObj);
-      // console.log(JSON.stringify(sourceTemplate));
-    })
+  let prVersions = getDirectories('pr').map((dir) => {
+    return {
+      id: dir,
+      text: 'pr/' + dir
+    }
   });
 
-  Promise.all([promisePR, promiseR]).then(([dirPR, dirR]) => {
-    sourceTemplate.results[1].children = dirR;
-    sourceTemplate.results[2].children = dirPR;
+  let rVersions = getDirectories('r').map((dir) => {
+    return {
+      id: dir,
+      text: 'r/' + dir
+    }
+  });
 
-    fs.writeFile("source.json", JSON.stringify(sourceTemplate), (err) => {
-      if (err)
-        console.log(err);
-      else {
-        console.log("File written successfully\n");
-        console.log("The written has the following contents:");
-        console.log(fs.readFileSync("source.json", "utf8"));
-      }
-    });
-
-    // console.log(JSON.stringify(sourceTemplate));
-  })
-
+  sourceTemplate.results[1].children = rVersions;
+  sourceTemplate.results[2].children = prVersions;
+  
+  core.setOutput("content", sourceTemplate);
 } catch (error) {
   core.setFailed(error.message);
 }

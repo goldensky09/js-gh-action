@@ -1,9 +1,9 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  storybook_indexing_n_cleanup_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: A job to cleanup merged PR and update storybook index
     steps:
       # To use this repository's private action,
       # you must check out the repository
@@ -12,11 +12,32 @@ jobs:
       - name: Install and Build
         run: | # Install the packages
           npm install
-      - name: Hello world action step
-        uses: ./ # Uses an action in the root directory
-        id: hello
+      - uses: dorny/paths-filter@v2
+        id: filter
         with:
-          who-to-greet: 'Mona the Octocat'
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+          filters: |
+            r:
+              - 'r/**'
+            pr:
+              - 'pr/**'
+
+      # run only if 'release' files were changed
+      # - name: release updated
+      #   if: steps.filter.outputs.r == 'true'
+      #   run: ...
+
+      # run if 'backend' or 'frontend' files were changed
+      # - name: e2e tests
+      #   if: steps.filter.outputs.backend == 'true' || steps.filter.outputs.frontend == 'true'
+      #   run: ...
+      - name: storybook versions update
+        uses: ./ # Uses an action in the root directory
+        id: storybooks_versions
+      # Use the output from the `storybooks_versions` step
+      - name: Get the output json content
+        uses: DamianReeves/write-file-action
+        with:
+          path: ${{ env.home }}/sources-out.json
+          contents: |
+            echo "${{ steps.storybook_versions.outputs.content }}"
+          write-mode: append
