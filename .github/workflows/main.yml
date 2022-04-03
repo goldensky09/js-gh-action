@@ -33,6 +33,8 @@ jobs:
       - name: storybook versions update
         uses: ./ # Uses an action in the root directory
         id: storybooks_versions
+        with:
+          who-to-greet: 'Mona the Octocat'
       # Use the output from the `storybooks_versions` step
       - name: Get the output json content
         uses: DamianReeves/write-file-action
