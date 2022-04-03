@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { readdirSync, writeFileSync, rmdirSync } = require('fs');
+const { readdirSync, writeFileSync, rmdirSync, rmSync } = require('fs');
 
 const sourceTemplate = {
   "results": [
@@ -45,7 +45,8 @@ try {
 
 
   if (isPublish === 'true') {
-    rmdirSync('./pr', { recursive: true });
+    // rmdirSync('./pr', { withFileTypes: true, recursive: true });
+    rmSync('pr', { recursive: true, force: true });
 
     console.log(`old PRs deleted!`);
   }
