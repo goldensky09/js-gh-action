@@ -19,6 +19,7 @@
   "homepage": "https://github.com/goldensky09/js-gh-action#readme",
   "dependencies": {
     "@actions/core": "^1.6.0",
-    "@actions/github": "^5.0.1"
+    "@actions/github": "^5.0.1",
+    "@actions/io": "^1.1.2"
   }
 }
