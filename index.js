@@ -40,16 +40,6 @@ try {
   const isPublish = core.getInput('isPublish');
   console.log("#############is publish received as" + isPublish)
 
-
-  const files = 
-
-  // files object contains all files names
-  // log them on console
-  files.forEach(file => {
-    console.log(file);
-  });
-
-
   if (isPublish === 'true') {
     // rmdirSync('./pr', { withFileTypes: true, recursive: true });
     // rmSync(path.resolve(__dirname,'pr'), { recursive: true, force: true });
