@@ -32,12 +32,16 @@ try {
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
 
+  const getDirectories = source =>
+    readdirSync(source, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => dirent.name);
 
   const isPublish = core.getInput('isPublish');
   console.log("#############is publish received as" + isPublish)
 
 
-  const files = readdirSync('pr', { withFileTypes: true });
+  const files = 
 
   // files object contains all files names
   // log them on console
@@ -49,21 +53,17 @@ try {
   if (isPublish === 'true') {
     // rmdirSync('./pr', { withFileTypes: true, recursive: true });
     // rmSync(path.resolve(__dirname,'pr'), { recursive: true, force: true });
-    io.rmRF('pr/**')
-      .catch((error) => {
-        core.setFailed(error.message);
-      });
+
+    // get all published PR storybook versions
+    getDirectories('pr').forEach(file => {
+      io.rmRF('pr/'+file``)
+        .catch((error) => {
+          core.setFailed(error.message);
+        });
+    })
 
     console.log(`old PRs deleted!`);
-  }
-
-
-  const getDirectories = source =>
-    readdirSync(source, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name)
-
-  if (isPublish === 'true') {
+  } else {
     let prVersions = getDirectories('pr').map((dir) => {
       return {
         id: dir,
@@ -71,7 +71,14 @@ try {
       }
     });
   }
+
+
   
+
+  if (isPublish !== 'true') {
+    
+  }
+
   let rVersions = getDirectories('r').map((dir) => {
     return {
       id: dir,
