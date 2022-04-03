@@ -36,10 +36,10 @@ jobs:
         with:
           who-to-greet: 'Mona the Octocat'
       # Use the output from the `storybooks_versions` step
-      - name: Get the output json content
-        uses: DamianReeves/write-file-action
-        with:
-          path: ${{ env.home }}/sources-out.json
-          contents: |
-            echo "${{ steps.storybook_versions.outputs.content }}"
-          write-mode: append
+      # - name: Get the output json content
+      #   uses: DamianReeves/write-file-action
+      #   with:
+      #     path: ${{ env.home }}/sources-out.json
+      #     contents: |
+      #       echo "${{ steps.storybook_versions.outputs.content }}"
+      #     write-mode: append
