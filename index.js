@@ -35,7 +35,7 @@ try {
   console.log("#############is publish received as" + isPublish)
 
 
-  const files = readdirSync('pr');
+  const files = readdirSync('pr', { withFileTypes: true });
 
     // files object contains all files names
     // log them on console
