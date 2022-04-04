@@ -48,10 +48,11 @@ try {
 
     // get all published PR storybook versions
     getDirectories('pr').forEach(file => {
-      io.rmRF('pr/'+file)
-        .catch((error) => {
-          core.setFailed(error.message);
-        });
+      console.log('++++++deleting the dir++++++'+'pr/'+file);
+      // io.rmRF('pr/'+file)
+      //   .catch((error) => {
+      //     core.setFailed(error.message);
+      //   });
     })
 
     console.log(`old PRs deleted!`);
