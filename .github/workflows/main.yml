@@ -3,10 +3,8 @@ on: [push]
 jobs:
   storybook_indexing_n_cleanup_job:
     runs-on: ubuntu-latest
-    name: A job to cleanup merged PR and update storybook index
+    name: Cleanup merged PRs and update Storybook index
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install and Build
@@ -18,39 +16,14 @@ jobs:
           filters: |
             r:
               - 'r/**'
-            pr:
-              - 'pr/**'
-
-      # run only if 'release' files were changed
-      # - name: release updated
-      #   if: steps.filter.outputs.r == 'true'
-      #   env:
-      #     RELEASE_FLAG: 
-
-      # run if 'backend' or 'frontend' files were changed
-      # - name: e2e tests
-      #   if: steps.filter.outputs.backend == 'true' || steps.filter.outputs.frontend == 'true'
-      #   run: ...
       - name: storybook versions update
         uses: ./ # Uses an action in the root directory
         id: storybook_versions
         with: 
-          isPublish: ${{ steps.filter.outputs.r }}
-      # Use the output from the `storybook_versions` step
-      # - name: Get the output json content
-      #   uses: DamianReeves/write-file-action
-      #   with:
-      #     path: ${{ env.home }}/sources-out.json
-      #     contents: |
-      #       echo "${{ steps.storybook_versions.outputs.content }}"
-      #     write-mode: append
-      # - uses: "finnp/create-file-action@master"
-      #   env:
-      #     FILE_NAME: "./source-out.json"
-      #     FILE_DATA: echo "${{ steps.storybook_versions.outputs.content }}"
+          isRelease: ${{ steps.filter.outputs.r }} #
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: 'update storybook versions'
-          add: "['source-out1.json', 'pr/**']"
+          message: 'Update storybook versions ${{ steps.storybook_versions.outputs.version }}'
+          add: "['storybooks.json', 'pr/**']"

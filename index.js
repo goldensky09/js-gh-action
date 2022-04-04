@@ -21,42 +21,34 @@ const sourceTemplate = {
   ]
 }
 
+let rVersions = [];
 let prVersions = [];
 
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  // const nameToGreet = core.getInput('who-to-greet');
-  // console.log(`Hello ${nameToGreet}!`);
-  // const time = (new Date()).toTimeString();
-  // core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-
   const getDirectories = source =>
     readdirSync(source, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name);
 
-  const isPublish = core.getInput('isPublish');
-  console.log("#############is publish received as" + isPublish)
+  const isRelease = core.getInput('isRelease');
 
-  if (isPublish === 'true') {
-    // rmdirSync('./pr', { withFileTypes: true, recursive: true });
-    // rmSync(path.resolve(__dirname,'pr'), { recursive: true, force: true });
+  if (isRelease === 'true') {
+    console.log("A realese storybook is published!")
 
-    // get all published PR storybook versions
+    // get all published PR storybook versions on every release and purge them
     getDirectories('pr').forEach(file => {
-      console.log('++++++deleting the dir++++++'+'pr/'+file);
-      // io.rmRF('pr/'+file)
-      //   .catch((error) => {
-      //     core.setFailed(error.message);
-      //   });
+      console.log('Cleaning the PR ' + file);
+
+      io.rmRF('pr/'+file)
+        .catch((error) => {
+          core.setFailed(error.message);
+        });
     })
 
-    console.log(`old PRs deleted!`);
+    console.log(`All old PRs deleted!`);
   } else {
+    // Get all published Storybook versions
     prVersions = getDirectories('pr').map((dir) => {
       return {
         id: dir,
@@ -65,24 +57,25 @@ try {
     });
   }
 
-
-  
-
-  if (isPublish !== 'true') {
-    
-  }
-
-  let rVersions = getDirectories('r').map((dir) => {
+  // Get all published release versions
+  rVersions = getDirectories('r').map((dir) => {
     return {
       id: dir,
       text: 'r/' + dir
     }
   });
 
+  // create a json to be consumed by storybook landing page dropdown
   sourceTemplate.results[1].children = rVersions;
   sourceTemplate.results[2].children = prVersions;
 
-  writeFileSync('source-out1.json', JSON.stringify(sourceTemplate));
+  // update the json on repo
+  writeFileSync('storybooks.json', JSON.stringify(sourceTemplate));
+
+  // For identifying different updates setting the version return as time
+  // as the publish version number is not accessible herre
+  const time = (new Date()).toTimeString();
+  core.setOutput("version", time);
 
 } catch (error) {
   core.setFailed(error.message);

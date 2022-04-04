@@ -1,13 +1,13 @@
 name: 'Storybook Versions update'
 description: 'Update storybook versions based on published revisions'
 inputs:
-  isPublish:  # id of input
+  isRelease:  # id of input
     description: 'is it a version Publish'
     required: false
     default: false
 outputs:
-  content: # id of output
-    description: 'The storybook version in json format'
+  version: # id of output
+    description: 'The storybook version update indicator'
 runs:
   using: 'node16'
   main: 'index.js'
