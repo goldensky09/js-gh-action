@@ -74,7 +74,7 @@ try {
 
   // For identifying different updates setting the version return as time
   // as the publish version number is not accessible herre
-  const time = (new Date()).toTimeString();
+  const time = (new Date()).toLocaleString();
   core.setOutput("version", time);
 
 } catch (error) {
