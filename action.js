@@ -69,7 +69,7 @@ try {
   sourceTemplate.results[1].children = rVersions;
   sourceTemplate.results[2].children = prVersions;
 
-  io.cp('assets', 'r/assets');
+  io.cp('assets/', 'r/assets', { recursive: true, force: false });
 
   // update the json on repo
   writeFileSync('storybooks.json', JSON.stringify(sourceTemplate));
