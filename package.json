@@ -1,22 +1,19 @@
 {
-  "name": "js-gh-action",
+  "name": "@delphix/dx-gui",
   "version": "1.0.0",
-  "description": "A custom github action that can do anything by using power of javascript",
-  "main": "index.js",
+  "description": "GH pages with own github action to organise storybooks",
+  "main": "action.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/goldensky09/js-gh-action.git"
+    "url": "ssh://git@github.com:delphix/dx-gui.git",
+    "directory": "@delphix/dx-gui"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/goldensky09/js-gh-action/issues"
-  },
-  "homepage": "https://github.com/goldensky09/js-gh-action#readme",
+  "private": true,
+  "delphixProduct": "Delphix GUI Components Library",
+  "delphixInternal": true,
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.1",
