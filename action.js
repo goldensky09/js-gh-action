@@ -1,12 +1,16 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { readdirSync, writeFileSync, rmdirSync, rmSync } = require('fs');
+const {
+  readdirSync,
+  writeFileSync,
+  rmdirSync,
+  rmSync
+} = require('fs');
 const path = require('path');
 const io = require('@actions/io');
 
 const sourceTemplate = {
-  "results": [
-    {
+  "results": [{
       "id": "",
       "text": "Select DxGUI Version"
     },
@@ -26,10 +30,18 @@ let prVersions = [];
 
 
 try {
+
+  // Get the JSON webhook payload for the event that triggered the workflow
+  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  console.log(`The event payload: ${payload}`);
+
   const getDirectories = source =>
-    readdirSync(source, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name);
+    readdirSync(source, {
+      withFileTypes: true
+    })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+    .filter(dir => dir !== 'assets');
 
   const isRelease = core.getInput('isRelease');
 
@@ -40,10 +52,10 @@ try {
     getDirectories('pr').forEach(file => {
       console.log('Cleaning the PR ' + file);
 
-      io.rmRF('pr/'+file)
-        .catch((error) => {
-          core.setFailed(error.message);
-        });
+      // io.rmRF('pr/' + file)
+      //   .catch((error) => {
+      //     core.setFailed(error.message);
+      //   });
     })
 
     console.log(`All old PRs deleted!`);
@@ -51,8 +63,8 @@ try {
     // Get all published Storybook versions
     prVersions = getDirectories('pr').map((dir) => {
       return {
-        id: dir,
-        text: 'pr/' + dir
+        id: 'pr/' + dir,
+        text: dir
       }
     });
   }
@@ -60,8 +72,8 @@ try {
   // Get all published release versions
   rVersions = getDirectories('r').map((dir) => {
     return {
-      id: dir,
-      text: 'r/' + dir
+      id: 'r/' + dir,
+      text: dir
     }
   });
 
@@ -69,14 +81,22 @@ try {
   sourceTemplate.results[1].children = rVersions;
   sourceTemplate.results[2].children = prVersions;
 
-  io.cp('/assets', 'pr/assets', { recursive: true, force: false });
-
   // update the json on repo
   writeFileSync('storybooks.json', JSON.stringify(sourceTemplate));
 
+  //update the assets beside release and pr directories
+  io.cp('assets', 'pr/assets', {
+    recursive: true,
+    force: false
+  });
+  io.cp('assets', 'r/assets', {
+    recursive: true,
+    force: false
+  });
+
   // For identifying different updates setting the version return as time
   // as the publish version number is not accessible herre
-  const time = (new Date()).toTimeString();
+  const time = (new Date()).toGMTString();
   core.setOutput("version", time);
 
 } catch (error) {
